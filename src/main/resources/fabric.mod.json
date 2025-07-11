@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "no-underleveled-evolutions",
+	"version": "${version}",
+	"name": "No Underleveled Evolutions",
+	"description": "Prevents Cobblemon from spawning evolved Pokemon below the level that they should evolve at.",
+	"authors": [
+		"Justicus"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/no-underleveled-evolutions/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "com.justicus.nounderleveledevolutions.NoUnderleveledEvolutions",
+				"adapter": "kotlin"
+			}
+		],
+		"fabric-datagen": [
+			{
+				"value": "com.justicus.nounderleveledevolutions.NoUnderleveledEvolutionsDataGenerator",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"no-underleveled-evolutions.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
