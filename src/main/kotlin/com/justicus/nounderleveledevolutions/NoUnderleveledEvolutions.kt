@@ -4,6 +4,8 @@ import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.pokemon.evolution.requirements.LevelRequirement
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
+import net.minecraft.text.MutableText
+import net.minecraft.text.Text
 import org.slf4j.LoggerFactory
 import java.util.UUID
 
@@ -22,18 +24,15 @@ object NoUnderleveledEvolutions : ModInitializer {
 			val level = pokemon.level
 			val preEvo = pokemon.preEvolution
 
-			logger.info("SERVER: $species's pre-evolution is ${preEvo?.species}")
-
 			val evolutions = preEvo?.form?.evolutions
 			val levelRequirement = evolutions
 				?.flatMap { it.requirements }
 				?.filterIsInstance<LevelRequirement>()
 				?.firstOrNull()
 
-			if (levelRequirement != null && level > levelRequirement.minLevel) {
-				logger.info("SERVER: Invalid level. Deleting entity.")
+			if (levelRequirement != null && level < levelRequirement.minLevel) {
+				logger.info("$level is below $species's threshold of ${levelRequirement.minLevel}. Deleting entity.")
 				evt.cancel()
-				logger.info("${evt.entity.pokemon.species} has been deleted")
 			}
 		}
 
